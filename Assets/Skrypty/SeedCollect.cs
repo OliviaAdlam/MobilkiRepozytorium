@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class SeedCollect : MonoBehaviour
 {
-    private int seeds = 0; // potem na E będzie można zobaczyć ekwipunek z nasionami
+    private int seeds = 0;
+
+    void Start()
+    {
+        seeds = PlayerPrefs.GetInt("Seeds", 0); 
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -11,8 +16,9 @@ public class SeedCollect : MonoBehaviour
             Seed seed = other.gameObject.GetComponent<Seed>();
             if (seed != null)
             {
-                seeds += 1;
+                seeds++;
                 Debug.Log("Nasiona: " + seeds);
+                PlayerPrefs.SetInt("Seeds", seeds);
                 Destroy(other.gameObject);
             }
         }
