@@ -7,6 +7,8 @@ TagManager:
   - Seed
   - Platform
   - Ground
+  - Flower
+  - DropZone
   layers:
   - Default
   - TransparentFX

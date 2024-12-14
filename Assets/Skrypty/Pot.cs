@@ -36,20 +36,29 @@ public class Pot : MonoBehaviour
 
     void PlantSeed()
     {
-        Vector3 plantPosition = transform.position + new Vector3(0, seedOffsetY, 0);  // Ustawienie nasiona nad doniczką
+    SeedCollect seedCollect = FindObjectOfType<SeedCollect>();
+
+    if (seedCollect != null && seedCollect.GetSeedCount() > 0)
+    {
+        seedCollect.UseSeedToPlant();
+        Vector3 plantPosition = transform.position + new Vector3(0, seedOffsetY, 0);
         currentSeed = Instantiate(seedPrefab, plantPosition, Quaternion.identity);
         isSeedPlanted = true;
         growthTimer = 0f;
     }
 
+    }
+
+
     void GrowFlower()
     {
-        if (currentSeed != null)  // Upewniamy się, że currentSeed nie jest null
-        {
-            Destroy(currentSeed);
-            Instantiate(flowerPrefab, transform.position + new Vector3(0, seedOffsetY, 0), Quaternion.identity);
-        }
+    if (currentSeed != null)
+    {
+        Destroy(currentSeed);
+        Vector3 flowerPosition = transform.position + new Vector3(0, seedOffsetY, 0); // Ustawienie pozycji kwiatu
+        Instantiate(flowerPrefab, flowerPosition, Quaternion.identity);
+    }
 
-        isSeedPlanted = false;
+    isSeedPlanted = false;
     }
 }

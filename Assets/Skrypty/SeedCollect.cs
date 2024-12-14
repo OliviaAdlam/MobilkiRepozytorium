@@ -7,20 +7,36 @@ public class SeedCollect : MonoBehaviour
     void Start()
     {
         seeds = PlayerPrefs.GetInt("Seeds", 0); 
+        Debug.Log("Liczba nasion: " + seeds);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Seed"))
         {
-            Seed seed = other.gameObject.GetComponent<Seed>();
-            if (seed != null)
-            {
-                seeds++;
-                Debug.Log("Nasiona: " + seeds);
-                PlayerPrefs.SetInt("Seeds", seeds);
-                Destroy(other.gameObject);
-            }
+            seeds++;
+            Debug.Log("Nasiona: " + seeds);
+            PlayerPrefs.SetInt("Seeds", seeds); 
+            Destroy(other.gameObject);
         }
+    }
+
+    public void UseSeedToPlant()
+    {
+        if (seeds > 0)
+        {
+            seeds--;
+            PlayerPrefs.SetInt("Seeds", seeds);
+            Debug.Log("Pozostałe nasiona: " + seeds);
+        }
+        else
+        {
+            Debug.Log("Brak nasion do zasadzenia.");
+        }
+    }
+
+    public int GetSeedCount()
+    {
+        return seeds;
     }
 }

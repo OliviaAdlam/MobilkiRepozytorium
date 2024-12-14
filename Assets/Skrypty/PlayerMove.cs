@@ -17,13 +17,11 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        // Ruch poziomy
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        // Pobieranie wartości ruchu
         moveInput = context.ReadValue<Vector2>();
     }
 
