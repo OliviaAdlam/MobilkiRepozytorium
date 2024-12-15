@@ -17,7 +17,7 @@ public class FlowerShop : MonoBehaviour
     void Start()
     {
         shopPanel.SetActive(false); 
-        flowerCount = PlayerPrefs.GetInt("Flowers", 0);
+        flowerCount = PlayerPrefs.GetInt("Flowers", 3);
         coins = PlayerPrefs.GetInt("Coins", 0);
         UpdateUI();
     }
@@ -48,18 +48,24 @@ public class FlowerShop : MonoBehaviour
             flowersInDropZone++;
             flowerCount--;
             UpdateUI();
+            Instantiate(flowerIconPrefab, dropZone);
         }
     }
 
     public void SellFlowers()
     {
-        if (flowersInDropZone >= 3)
+        if (flowersInDropZone >= 2)
         {
             coins += flowersInDropZone;
             flowersInDropZone = 0;
+
             PlayerPrefs.SetInt("Coins", coins);
             PlayerPrefs.SetInt("Flowers", flowerCount);
+
+            ClearDropZone();
             UpdateUI();
+
+            Debug.Log($"Sprzedano kwiaty! Monety: {coins}");
         }
         else
         {
@@ -71,5 +77,13 @@ public class FlowerShop : MonoBehaviour
     {
         flowerCountText.text = $"Kwiaty: {flowerCount}";
         coinText.text = $"Monety: {coins}";
+    }
+
+    private void ClearDropZone()
+    {
+        foreach (Transform child in dropZone)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

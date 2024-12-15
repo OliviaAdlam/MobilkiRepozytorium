@@ -4,10 +4,9 @@ public class Pot : MonoBehaviour
 {
     public GameObject seedPrefab;
     public GameObject flowerPrefab;
-    public float growthTime = 300f;  // Czas wzrostu w sekundach (5 minut)
-    public Vector3 grownSize = new Vector3(1f, 1f, 1f); // Docelowy rozmiar kwiatu
-    public float seedOffsetY = 0.5f;  // Odległość nasiona od doniczki w osi Y (nad doniczką)
-
+    public float growthTime = 300f;
+    public Vector3 grownSize = new Vector3(1f, 1f, 1f); 
+    public float seedOffsetY = 0.5f;
     private GameObject currentSeed;
     private bool isSeedPlanted = false;
     private float growthTimer = 0f;
