@@ -5,20 +5,22 @@ public class Pot : MonoBehaviour
     public GameObject seedPrefab;
     public GameObject flowerPrefab;
     public float growthTime = 300f;
-    public Vector3 grownSize = new Vector3(1f, 1f, 1f); 
+    public Vector3 grownSize = new Vector3(1f, 1f, 1f);
     public float seedOffsetY = 0.5f;
+
     private GameObject currentSeed;
     private bool isSeedPlanted = false;
     private float growthTimer = 0f;
+    private bool isPlayerNear = false;  // Dodano zmienną do wykrywania, czy gracz jest w pobliżu doniczki
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isSeedPlanted)
+        if (Input.GetKeyDown(KeyCode.E) && !isSeedPlanted && isPlayerNear)  // Dodajemy sprawdzenie, czy gracz jest blisko
         {
             PlantSeed();
         }
 
-        if (isSeedPlanted && currentSeed != null) // Sprawdzamy, czy currentSeed nie jest null
+        if (isSeedPlanted && currentSeed != null)
         {
             growthTimer += Time.deltaTime;
             if (growthTimer >= growthTime)
@@ -33,31 +35,80 @@ public class Pot : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerNear = true;  // Gracz wchodzi w obszar doniczki
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerNear = false;  // Gracz wychodzi z obszaru doniczki
+        }
+    }
+
     void PlantSeed()
     {
-    SeedCollect seedCollect = FindObjectOfType<SeedCollect>();
+        SeedCollect seedCollect = FindObjectOfType<SeedCollect>();
 
-    if (seedCollect != null && seedCollect.GetSeedCount() > 0)
-    {
-        seedCollect.UseSeedToPlant();
-        Vector3 plantPosition = transform.position + new Vector3(0, seedOffsetY, 0);
-        currentSeed = Instantiate(seedPrefab, plantPosition, Quaternion.identity);
-        isSeedPlanted = true;
-        growthTimer = 0f;
+        if (seedCollect != null)
+        {
+            string potTag = gameObject.tag;
+            bool canPlant = false;
+
+            // Sprawdzamy, czy potTag odpowiada SeedCollect
+            switch (potTag)
+            {
+                case "Pot1":
+                    if (isPlayerNear && seedCollect.GetSeedCount("Seed1") > 0)  // Sprawdzamy, czy gracz jest blisko i ma odpowiednie nasiono
+                    {
+                        seedCollect.UseSeedToPlant("Seed1");
+                        canPlant = true;
+                    }
+                    break;
+                case "Pot2":
+                    if (isPlayerNear && seedCollect.GetSeedCount("Seed2") > 0)
+                    {
+                        seedCollect.UseSeedToPlant("Seed2");
+                        canPlant = true;
+                    }
+                    break;
+                case "Pot3":
+                    if (isPlayerNear && seedCollect.GetSeedCount("Seed3") > 0)
+                    {
+                        seedCollect.UseSeedToPlant("Seed3");
+                        canPlant = true;
+                    }
+                    break;
+            }
+
+            if (canPlant)
+            {
+                Vector3 plantPosition = transform.position + new Vector3(0, seedOffsetY, 0);
+                currentSeed = Instantiate(seedPrefab, plantPosition, Quaternion.identity);
+                isSeedPlanted = true;
+                growthTimer = 0f;
+            }
+            else
+            {
+                Debug.Log($"Nie masz odpowiedniego nasiona dla doniczki {potTag} lub nie jesteś blisko!");
+            }
+        }
     }
-
-    }
-
 
     void GrowFlower()
     {
-    if (currentSeed != null)
-    {
-        Destroy(currentSeed);
-        Vector3 flowerPosition = transform.position + new Vector3(0, seedOffsetY, 0); // Ustawienie pozycji kwiatu
-        Instantiate(flowerPrefab, flowerPosition, Quaternion.identity);
-    }
+        if (currentSeed != null)
+        {
+            Destroy(currentSeed);
+            Vector3 flowerPosition = transform.position + new Vector3(0, seedOffsetY, 0);
+            Instantiate(flowerPrefab, flowerPosition, Quaternion.identity);
+        }
 
-    isSeedPlanted = false;
+        isSeedPlanted = false;
     }
 }

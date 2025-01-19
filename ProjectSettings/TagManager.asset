@@ -9,6 +9,12 @@ TagManager:
   - Ground
   - Flower
   - DropZone
+  - Seed1
+  - Pot1
+  - Seed2
+  - Pot2
+  - Pot3
+  - Seed3
   layers:
   - Default
   - TransparentFX

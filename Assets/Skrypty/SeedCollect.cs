@@ -1,42 +1,47 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SeedCollect : MonoBehaviour
 {
-    private int seeds = 0;
+    private Dictionary<string, int> seeds = new Dictionary<string, int>();
 
     void Start()
     {
-        seeds = PlayerPrefs.GetInt("Seeds", 0); 
-        Debug.Log("Liczba nasion: " + seeds);
+        // Odczytanie liczby nasion z PlayerPrefs
+        seeds["Seed1"] = PlayerPrefs.GetInt("Seed1", 1);
+        seeds["Seed2"] = PlayerPrefs.GetInt("Seed2", 1);
+        seeds["Seed3"] = PlayerPrefs.GetInt("Seed3", 1);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Seed"))
+        Debug.Log("Collision detected with: " + other.gameObject.name); // Debugowanie
+        if (other.gameObject.CompareTag("Seed1") || other.gameObject.CompareTag("Seed2") || other.gameObject.CompareTag("Seed3"))
         {
-            seeds++;
-            Debug.Log("Nasiona: " + seeds);
-            PlayerPrefs.SetInt("Seeds", seeds); 
-            Destroy(other.gameObject);
+            string seedType = other.gameObject.tag; // Pobierz typ nasiona z tagu
+            if (seeds.ContainsKey(seedType))
+            {
+                seeds[seedType]++;
+                PlayerPrefs.SetInt(seedType, seeds[seedType]);
+                PlayerPrefs.Save(); // Wymuszamy zapis danych
+                Destroy(other.gameObject); // Usuń nasiono z gry
+                Debug.Log($"{seedType} zebrane! Ilość: {seeds[seedType]}");
+            }
         }
     }
 
-    public void UseSeedToPlant()
+    public int GetSeedCount(string seedType)
     {
-        if (seeds > 0)
-        {
-            seeds--;
-            PlayerPrefs.SetInt("Seeds", seeds);
-            Debug.Log("Pozostałe nasiona: " + seeds);
-        }
-        else
-        {
-            Debug.Log("Brak nasion do zasadzenia.");
-        }
+        return seeds.ContainsKey(seedType) ? seeds[seedType] : 0;
     }
 
-    public int GetSeedCount()
+    public void UseSeedToPlant(string seedType)
     {
-        return seeds;
+        if (seeds.ContainsKey(seedType) && seeds[seedType] > 0)
+        {
+            seeds[seedType]--;
+            PlayerPrefs.SetInt(seedType, seeds[seedType]);
+            PlayerPrefs.Save(); // Wymuszamy zapis danych
+        }
     }
 }
