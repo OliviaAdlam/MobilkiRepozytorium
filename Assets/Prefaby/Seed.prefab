@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5648209260322152434}
   m_Layer: 0
   m_Name: Seed
-  m_TagString: Seed
+  m_TagString: Seed1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,4 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f318946878a7ec47aa20bfb1d6b25eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seedType: 
+  seedType: Seed1

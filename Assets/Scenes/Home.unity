@@ -2505,18 +2505,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 220010211382875975, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 220010211382875975, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 220010211382875975, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 220010211382875975, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2556,42 +2544,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 220010211382875975, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1206971981351599791, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
       propertyPath: m_Size.x
-      value: 7.33
+      value: 6.6
       objectReference: {fileID: 0}
     - target: {fileID: 1206971981351599791, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
       propertyPath: m_Size.y
-      value: 3.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1206971981351599791, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 9.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1206971981351599791, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 9.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1506689213814254308, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1506689213814254308, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_Simulated
-      value: 1
+      value: 3.27
       objectReference: {fileID: 0}
     - target: {fileID: 8778721305891690534, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8909434696563383836, guid: 57f57b6b3c0a47f43ae6e8eb0ce3d1d0, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2277dc0ebfed3cc4c9b052415a7df0bb, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
