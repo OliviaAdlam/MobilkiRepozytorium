@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/karsiori/Scenes/SampleScene - Woods Tileset and Background.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Poziom.unity
@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 7337b3569b8eb1f43afd965b85d2c252
+  - enabled: 1
+    path: Assets/Scenes/Poziom 1.unity
+    guid: eb545bd392965544899f7d0782b9997b
+  - enabled: 1
+    path: Assets/Scenes/Poziom 2.unity
+    guid: a84d60c028176bc47922524c08854ded
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: a3008d6df383a484098776db3ae60af8, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 8914f0ff0014eb34a9e1ad21906d3818, type: 2}

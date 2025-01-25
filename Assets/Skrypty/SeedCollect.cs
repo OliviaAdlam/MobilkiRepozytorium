@@ -8,9 +8,9 @@ public class SeedCollect : MonoBehaviour
     void Start()
     {
         // Odczytanie liczby nasion z PlayerPrefs
-        seeds["Seed1"] = PlayerPrefs.GetInt("Seed1", 1);
-        seeds["Seed2"] = PlayerPrefs.GetInt("Seed2", 1);
-        seeds["Seed3"] = PlayerPrefs.GetInt("Seed3", 1);
+        seeds["Seed1"] = PlayerPrefs.GetInt("Seed1", 0);
+        seeds["Seed2"] = PlayerPrefs.GetInt("Seed2", 0);
+        seeds["Seed3"] = PlayerPrefs.GetInt("Seed3", 0);
     }
 
     void OnTriggerEnter2D(Collider2D other)
