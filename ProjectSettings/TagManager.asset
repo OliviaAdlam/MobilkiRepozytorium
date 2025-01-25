@@ -15,6 +15,9 @@ TagManager:
   - Pot2
   - Pot3
   - Seed3
+  - Flower1
+  - Flower2
+  - Flower3
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@ public class FlShopTrig : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<FlowerShop>().OpenShop();
+            FindObjectOfType<FlowerShopSystem>().OpenShop();
         }
     }
 }

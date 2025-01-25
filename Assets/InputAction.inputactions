@@ -22,15 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "80c7f39b-d050-44a2-bd3b-27a00f972690",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -121,10 +112,27 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "E_pot",
+            "id": "65856baf-8c50-4bfd-ab33-2e1e501fa85e",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "9bc23bd1-7c76-415f-9798-589967afe933",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "0c2dd565-0a02-4714-86d1-d15c58f0abed",
+                    "id": "117a3089-89a9-41af-b90d-cd8377ed9307",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -135,7 +143,7 @@
                 },
                 {
                     "name": "",
-                    "id": "ecf10637-c5c2-48e0-bf1e-16ee31b1d237",
+                    "id": "85efb1b4-a6f5-403f-b7a8-d4b3959ba035",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",

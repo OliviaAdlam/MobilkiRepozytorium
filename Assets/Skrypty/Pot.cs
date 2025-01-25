@@ -11,11 +11,12 @@ public class Pot : MonoBehaviour
     private GameObject currentSeed;
     private bool isSeedPlanted = false;
     private float growthTimer = 0f;
-    private bool isPlayerNear = false;  // Dodano zmienną do wykrywania, czy gracz jest w pobliżu doniczki
+
+    private bool isPlayerNearby = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isSeedPlanted && isPlayerNear)  // Dodajemy sprawdzenie, czy gracz jest blisko
+        if (Input.GetKeyDown(KeyCode.E) && !isSeedPlanted && isPlayerNearby)
         {
             PlantSeed();
         }
@@ -35,22 +36,6 @@ public class Pot : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;  // Gracz wchodzi w obszar doniczki
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;  // Gracz wychodzi z obszaru doniczki
-        }
-    }
-
     void PlantSeed()
     {
         SeedCollect seedCollect = FindObjectOfType<SeedCollect>();
@@ -60,25 +45,24 @@ public class Pot : MonoBehaviour
             string potTag = gameObject.tag;
             bool canPlant = false;
 
-            // Sprawdzamy, czy potTag odpowiada SeedCollect
             switch (potTag)
             {
                 case "Pot1":
-                    if (isPlayerNear && seedCollect.GetSeedCount("Seed1") > 0)  // Sprawdzamy, czy gracz jest blisko i ma odpowiednie nasiono
+                    if (seedCollect.GetSeedCount("Seed1") > 0)
                     {
                         seedCollect.UseSeedToPlant("Seed1");
                         canPlant = true;
                     }
                     break;
                 case "Pot2":
-                    if (isPlayerNear && seedCollect.GetSeedCount("Seed2") > 0)
+                    if (seedCollect.GetSeedCount("Seed2") > 0)
                     {
                         seedCollect.UseSeedToPlant("Seed2");
                         canPlant = true;
                     }
                     break;
                 case "Pot3":
-                    if (isPlayerNear && seedCollect.GetSeedCount("Seed3") > 0)
+                    if (seedCollect.GetSeedCount("Seed3") > 0)
                     {
                         seedCollect.UseSeedToPlant("Seed3");
                         canPlant = true;
@@ -95,7 +79,7 @@ public class Pot : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Nie masz odpowiedniego nasiona dla doniczki {potTag} lub nie jesteś blisko!");
+                Debug.Log($"Nie masz odpowiedniego nasiona dla doniczki {potTag}!");
             }
         }
     }
@@ -110,5 +94,21 @@ public class Pot : MonoBehaviour
         }
 
         isSeedPlanted = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isPlayerNearby = true;
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isPlayerNearby = false;
+        }
     }
 }
