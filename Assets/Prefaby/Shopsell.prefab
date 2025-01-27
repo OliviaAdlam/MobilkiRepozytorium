@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7710077129954093309}
   - component: {fileID: 1528940771895022811}
   - component: {fileID: 1193642641157208135}
-  - component: {fileID: 4967116007269578043}
   - component: {fileID: 481200259168976004}
   m_Layer: 0
   m_Name: Shopsell
@@ -155,29 +154,7 @@ MonoBehaviour:
   potsText: {fileID: 0}
   buyPotButton: {fileID: 0}
   potPrice: 5
-  flowerIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   shopPanel: {fileID: 0}
---- !u!114 &4967116007269578043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5300705851562251555}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92aab5890d4720a4d84ad86d789109fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopPanel: {fileID: 0}
-  flowerCountText: {fileID: 0}
-  flowerIconPrefab: {fileID: 5826193246113557752, guid: 664496422ba456142a496553d46e8ff6, type: 3}
-  dropZone: {fileID: 0}
-  sellButton: {fileID: 0}
-  coinText: {fileID: 0}
 --- !u!114 &481200259168976004
 MonoBehaviour:
   m_ObjectHideFlags: 0

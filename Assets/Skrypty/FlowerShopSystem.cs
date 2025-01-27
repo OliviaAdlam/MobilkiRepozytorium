@@ -1,150 +1,112 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class FlowerShopSystem : MonoBehaviour
 {
-    [Header("Bukiety i zakupy")]
-    public Text bouquetsText; // Tekst wyświetlający liczbę bukietów
-    public Text selectedFlowersText; // Tekst wyświetlający zaznaczone kwiaty
-    public Button convertButton; // Przycisk konwersji na bukiety
+    public GameObject flowersTab;
+    public GameObject potsTab;
+    public Button flowersTabButton;
+    public Button potsTabButton;
 
-    [Header("Zakładki sklepu")]
-    public GameObject bouquetsTab; // Zakładka bukiety
-    public GameObject potsTab; // Zakładka doniczki
-    public Button bouquetsTabButton; // Przycisk przełączania do zakładki bukiety
-    public Button potsTabButton; // Przycisk przełączania do zakładki doniczki
+    public Button sellFlowersButton;
+    public Text flowersText;
+    public Text bouquetsText;
+    public int flowersToSell = 3;
+    private int bouquets = 3;
 
-    [Header("Doniczki")]
-    public Text potsText; // Tekst wyświetlający liczbę doniczek
-    public Button buyPotButton; // Przycisk zakupu doniczek
-    public int potPrice = 5; // Cena doniczki
-
-    [Header("Kwiaty i ikony")]
-    public List<Image> flowerIcons; // Ikony kwiatów w UI
-
-    // Panel sklepu
-    public GameObject shopPanel; // Cały panel sklepu, który zawiera zakładki i inne elementy UI
-
-    private Dictionary<string, int> selectedFlowers = new Dictionary<string, int>
-    {
-        { "Flower1", 0 },
-        { "Flower2", 0 },
-        { "Flower3", 0 }
-    };
-
-    private int bouquets = 0;
+    public Button buyPotButton1;
+    public Button buyPotButton2;
+    public Text potsText;
     private int pots = 0;
+
+    public GameObject pot1;
+    public GameObject pot2;
+
+    private FlowerCollect flowerCollect;
+
+    public GameObject shopPanel;
 
     void Start()
     {
-        bouquetsTab.SetActive(true);
+        flowerCollect = FindObjectOfType<FlowerCollect>();
+
+        flowersTab.SetActive(true);
         potsTab.SetActive(false);
-        shopPanel.SetActive(false); // Na początku sklep jest zamknięty
 
-        bouquetsTabButton.onClick.AddListener(() => SwitchTab(true));
+        flowersTabButton.onClick.AddListener(() => SwitchTab(true));
         potsTabButton.onClick.AddListener(() => SwitchTab(false));
-        convertButton.onClick.AddListener(GenerateBouquets);
-        buyPotButton.onClick.AddListener(BuyPot);
+        sellFlowersButton.onClick.AddListener(SellFlowers);
+        buyPotButton1.onClick.AddListener(() => BuyPot(1));
+        buyPotButton2.onClick.AddListener(() => BuyPot(2));
 
+        LoadPurchasedPots(); // Załaduj stan zakupionych doniczek
         UpdateUI();
     }
 
     void Update()
     {
-        // Sprawdzenie, czy klawisz ESC został naciśnięty i sklep jest otwarty
-        if (Input.GetKeyDown(KeyCode.Escape) && shopPanel.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseShop(); // Zamknięcie sklepu
+            CloseShop();
         }
     }
 
-    // Funkcja do otwierania sklepu
+    private void SwitchTab(bool toFlowersTab)
+    {
+        flowersTab.SetActive(toFlowersTab);
+        potsTab.SetActive(!toFlowersTab);
+    }
+
     public void OpenShop()
     {
-        shopPanel.SetActive(true); // Aktywujemy panel sklepu
-        UpdateUI(); // Odświeżamy UI, żeby pokazać aktualny stan
-    }
-
-    // Funkcja do zamykania sklepu
-    public void CloseShop()
-    {
-        shopPanel.SetActive(false); // Dezaktywujemy panel sklepu
-    }
-
-    // Funkcja do klikania kwiatów
-    public void OnFlowerClick(string flowerTag)
-    {
-        if (selectedFlowers.ContainsKey(flowerTag))
-        {
-            selectedFlowers[flowerTag]++; // Zwiększamy liczbę wybranego kwiatu
-            HighlightFlower(flowerTag); // Podświetlamy kliknięty kwiat
-            UpdateUI(); // Odświeżamy UI
-        }
-        else
-        {
-            Debug.LogWarning($"Nieznany tag kwiatu: {flowerTag}");
-        }
-    }
-
-    private void HighlightFlower(string flowerTag)
-    {
-        foreach (Image icon in flowerIcons)
-        {
-            if (icon.CompareTag(flowerTag))
-            {
-                icon.color = Color.yellow; // Podświetlenie klikniętego kwiatu
-            }
-        }
-    }
-
-    // Funkcja do generowania bukietów
-    private void GenerateBouquets()
-    {
-        int flower1Count = selectedFlowers["Flower1"];
-        int flower2Count = selectedFlowers["Flower2"];
-        int flower3Count = selectedFlowers["Flower3"];
-
-        int newBouquets = 0;
-
-        // Tworzenie bukietów
-        while (flower1Count >= 3)
-        {
-            flower1Count -= 3;
-            newBouquets++;
-        }
-        while (flower1Count >= 1 && flower2Count >= 1)
-        {
-            flower1Count -= 1;
-            flower2Count -= 1;
-            newBouquets++;
-        }
-        while (flower1Count >= 2 && flower3Count >= 1)
-        {
-            flower1Count -= 2;
-            flower3Count -= 1;
-            newBouquets += 2; // 2 bukiety
-        }
-
-        bouquets += newBouquets;
-
-        // Aktualizacja zaznaczonych kwiatów
-        selectedFlowers["Flower1"] = flower1Count;
-        selectedFlowers["Flower2"] = flower2Count;
-        selectedFlowers["Flower3"] = flower3Count;
-
+        shopPanel.SetActive(true);
         UpdateUI();
     }
 
-    // Funkcja do zakupu doniczki
-    private void BuyPot()
+    public void CloseShop()
+    {
+        shopPanel.SetActive(false);
+    }
+
+    private void SellFlowers()
+    {
+        int flowerCount = flowerCollect.GetFlowerCount();
+
+        if (flowerCount >= flowersToSell)
+        {
+            flowerCollect.RemoveFlowers(flowersToSell);
+            bouquets++;
+            UpdateUI();
+            Debug.Log("Sprzedano 3 kwiaty za 1 bukiet.");
+        }
+        else
+        {
+            Debug.Log("Nie masz wystarczającej liczby kwiatów.");
+        }
+    }
+
+    private void BuyPot(int potPrice)
     {
         if (bouquets >= potPrice)
         {
             bouquets -= potPrice;
             pots++;
             UpdateUI();
-            Debug.Log("Kupiono doniczkę!");
+
+            if (potPrice == 1 && pot1 != null)
+            {
+                pot1.SetActive(true);
+                buyPotButton1.interactable = false; // Dezaktywacja przycisku po zakupie
+                PlayerPrefs.SetInt("Pot1Bought", 1); // Zapisanie stanu zakupu doniczki
+                Debug.Log("Kupiono doniczkę 1 za 1 bukiet!");
+            }
+            else if (potPrice == 2 && pot2 != null)
+            {
+                pot2.SetActive(true);
+                buyPotButton2.interactable = false; // Dezaktywacja przycisku po zakupie
+                PlayerPrefs.SetInt("Pot2Bought", 1); // Zapisanie stanu zakupu doniczki
+                Debug.Log("Kupiono doniczkę 2 za 2 bukiety!");
+            }
         }
         else
         {
@@ -152,40 +114,26 @@ public class FlowerShopSystem : MonoBehaviour
         }
     }
 
-    private void SwitchTab(bool toBouquetsTab)
+    private void LoadPurchasedPots()
     {
-        bouquetsTab.SetActive(toBouquetsTab);
-        potsTab.SetActive(!toBouquetsTab);
+        // Załaduj stan zakupu doniczek
+        if (PlayerPrefs.GetInt("Pot1Bought", 0) == 1)
+        {
+            pot1.SetActive(true);
+            buyPotButton1.interactable = false; // Dezaktywacja przycisku po zakupie
+        }
+
+        if (PlayerPrefs.GetInt("Pot2Bought", 0) == 1)
+        {
+            pot2.SetActive(true);
+            buyPotButton2.interactable = false; // Dezaktywacja przycisku po zakupie
+        }
     }
 
     private void UpdateUI()
     {
+        flowersText.text = $"Kwiaty: {flowerCollect.GetFlowerCount()}";
         bouquetsText.text = $"Bukiety: {bouquets}";
-        selectedFlowersText.text = $"Zaznaczone: {selectedFlowers["Flower1"]}x Flower1, {selectedFlowers["Flower2"]}x Flower2, {selectedFlowers["Flower3"]}x Flower3";
         potsText.text = $"Doniczki: {pots}";
-
-        ResetFlowerIcons();
-    }
-
-    private void ResetFlowerIcons()
-    {
-        foreach (Image icon in flowerIcons)
-        {
-            icon.color = Color.white; // Resetowanie podświetlenia
-        }
-
-        foreach (var flowerTag in selectedFlowers.Keys)
-        {
-            if (selectedFlowers[flowerTag] > 0)
-            {
-                foreach (Image icon in flowerIcons)
-                {
-                    if (icon.CompareTag(flowerTag))
-                    {
-                        icon.color = Color.yellow; // Oznacz zaznaczone
-                    }
-                }
-            }
-        }
     }
 }

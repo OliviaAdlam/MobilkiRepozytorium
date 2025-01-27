@@ -9,15 +9,27 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGround = false;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Pobieramy komponent SpriteRenderer
     }
 
     void Update()
     {
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+
+        // Obracamy sprite'a w zależności od kierunku ruchu
+        if (moveInput.x > 0) // Porusza się w prawo
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveInput.x < 0) // Porusza się w lewo
+        {
+            spriteRenderer.flipX = true;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
